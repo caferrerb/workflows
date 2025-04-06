@@ -1,0 +1,1 @@
+export type ActivityFunction<P extends any[] = any[], R = any> = (...args: P) => Promise<R>;
