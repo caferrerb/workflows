@@ -1,4 +1,4 @@
-import { getActivities } from "../../activities/annotations/activity";
+import { activitiesConfig } from "../../activities/annotations/activity";
 
 interface WorkflowConfig {
     name: string;
@@ -9,18 +9,12 @@ interface WorkflowConfig {
     };
   }
   
-  const workflowRegistry = new Map<string, { instance: any; config: WorkflowConfig }>();
+  const workflowRegistry = new Map<string, { workflowClass: any; config: WorkflowConfig }>();
   
   export function Workflow(config: WorkflowConfig): ClassDecorator {
-    return (target: Function) => {
-      const instance = new (target as any)();
-  
-      // Inyectar activities si existe la propiedad
-      if ('activities' in instance) {
-        instance.activities = getActivities();
-      }
-  
-      workflowRegistry.set(config.name, { instance, config });
+    return (target: Function) => {  
+      const name = config.name ?? target.name; 
+      workflowRegistry.set(name, { workflowClass: target, config });
     };
   }
   

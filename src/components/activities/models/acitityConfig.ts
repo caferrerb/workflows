@@ -8,6 +8,7 @@ export interface ActivityConfig {
         nonRetryableErrorTypes?: string[];
     };
     timeout?: number;
+    compensationActivity?: string;
 }
 
 export interface ActivityDefinition {
